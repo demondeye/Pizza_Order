@@ -3,8 +3,10 @@ Mains Menu Module
 =================
 Contains the deserts menu items and display logic for the mains category.
 Allows customers to browse deserts and add them to their cart.
+main desert code was done by Joy Kisby but edited by matthew redman to fit program structure within the cart 
 
-Author: Your Name
+Author: Joy Kisby
+edited by matthew 
 Date: November 2025
 Version: 1.0
 """
@@ -25,12 +27,13 @@ confirm_wait = wait_for_confirm
 # ============================================================================
 
 # Dictionary of available deserts with their prices
+# Joys  code but layed out to be accepted my the program layout
 deserts = {
-    '1': {'name': 'Tiramisu', 'price': 4.99},
-    '2': {'name': 'Chocolate Mousse', 'price': 14.99},
-    '3': {'name': 'Cannoli', 'price': 16.99,},
-    '4': {'name': 'Sticky Date Pudding', 'price': 15.49,},
-    '5': {'name': 'Cheesecake', 'price': 13.99,},
+    '1': {'name': 'Tiramisu', 'price': 8.50},
+    '2': {'name': 'Chocolate Mousse', 'price': 7.99},
+    '3': {'name': 'Cannoli', 'price': 10.99,},
+    '4': {'name': 'Sticky Date Pudding', 'price': 12.50,},
+    '5': {'name': 'Cheesecake', 'price': 11.99,},
 
    
 }

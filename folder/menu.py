@@ -20,7 +20,10 @@ from . import mains
 from. import drinks
 from. import deserts
 from . import sides
+import time
 
+
+wait_time=5
 # ============================================================================
 # assign imports a verisable name
 # ============================================================================
@@ -203,6 +206,8 @@ def show_exit_message():
     print("Thank you for visiting Pizza Paradise!")
     print("Have a great day! 🍕")
     print("=" * 50 + "\n")
-    enter_key_wait()
+    # waits for 3 seconds before continuing application
+    time.sleep(wait_time)
+    # enter_key_wait()
     clear_screen()
 # ============================================================================

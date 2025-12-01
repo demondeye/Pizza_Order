@@ -14,7 +14,9 @@ Version: 1.0
 # ============================================================================
 from . import cart
 from .Key_press import wait_for_enter, wait_for_confirm, clear_screens
-
+import time
+# Create the variable for waiting
+wait_time=3
 # Create the variable for enter key waiting
 enter_key_wait = wait_for_enter
 clear_screen = clear_screens
@@ -27,11 +29,11 @@ confirm_wait = wait_for_confirm
 # Dictionary of available sides with their prices
 sides = {
     '1': {'name': 'Chips', 'price': 4.99},
-    '2': {'name': 'Garlic bread', 'price': 14.99},
-    '3': {'name': 'Onion rings', 'price': 16.99,},
-    '4': {'name': 'Caesar salad', 'price': 15.49,},
-    '5': {'name': 'Bread sticks', 'price': 13.99,},
-    '5': {'name': 'Arancini balls', 'price': 13.99,},
+    '2': {'name': 'Garlic bread', 'price': 5.50},
+    '3': {'name': 'Onion rings', 'price': 6.99,},
+    '4': {'name': 'Caesar salad', 'price': 9.49,},
+    '5': {'name': 'Bread sticks(10 pack)', 'price': 8.99,},
+    '6': {'name': 'Arancini balls (3 pcs)', 'price': 12.99,},
 
    
 }
@@ -109,12 +111,16 @@ def sides_show_sides():
                     if quantity <= 0:
                         clear_screen()
                         print("\n❌ Quantity must be greater than 0!")
-                        enter_key_wait()
+                        #enter_key_wait()
+                        #time to wait before continuing the applicaiton
+                        time.sleep(wait_time)
                         continue
                     elif quantity > 20:
                         clear_screen()
                         print(f"\n❌ Maximum quantity is 20 per item! You entered: {quantity}")
-                        enter_key_wait()
+                        #enter_key_wait()
+                        #time to wait before continuing the applicaiton
+                        time.sleep(wait_time)
                         continue
                     else:
                         # Valid quantity
@@ -123,20 +129,26 @@ def sides_show_sides():
                 except ValueError:
                     clear_screen()
                     print("\n❌ Invalid quantity! Please enter a number.")
-                    enter_key_wait()
+                    #enter_key_wait()
+                    #time to wait before continuing the applicaiton
+                    time.sleep(wait_time)
                     continue
             
             # Add to cart
             cart.add_item(side['name'], side['price'], quantity)
             print(f"\n💰 Subtotal: ${side['price'] * quantity:.2f}")
             # clear_screen()
-            enter_key_wait()
+            #enter_key_wait()
+            #time to wait before continuing the applicaiton
+            time.sleep(wait_time)
             
         else:
             # Invalid choice
             clear_screen()
             print("\n❌ Invalid choice! Please select a number from 1-9.")
-            enter_key_wait()
+            #enter_key_wait()
+            #time to wait before continuing the applicaiton
+            time.sleep(wait_time)
 
 
 # ============================================================================

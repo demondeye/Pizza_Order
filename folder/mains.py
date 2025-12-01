@@ -14,11 +14,13 @@ Version: 1.0
 # ============================================================================
 from . import cart
 from .Key_press import wait_for_enter, wait_for_confirm, clear_screens
+import time
 
 # Create the variable for enter key waiting
 enter_key_wait = wait_for_enter
 clear_screen = clear_screens
 confirm_wait = wait_for_confirm
+wait_time=3
 
 # ============================================================================
 # PIZZA MENU DATA
@@ -109,12 +111,17 @@ def mains_show_mains():
                     if quantity <= 0:
                         clear_screen()
                         print("\n❌ Quantity must be greater than 0!")
-                        enter_key_wait()
+
+                        #enter_key_wait()
+                         #time to wait before continuing the applicaiton
+                        time.sleep(wait_time)
                         continue
                     elif quantity > 20:
                         clear_screen()
                         print(f"\n❌ Maximum quantity is 20 per item! You entered: {quantity}")
-                        enter_key_wait()
+                         #time to wait before continuing the applicaiton
+                        time.sleep(wait_time)
+                        #enter_key_wait()
                         continue
                     else:
                         # Valid quantity
@@ -123,20 +130,27 @@ def mains_show_mains():
                 except ValueError:
                     clear_screen()
                     print("\n❌ Invalid quantity! Please enter a number.")
-                    enter_key_wait()
+                    # enter_key_wait()
+                    #time to wait before continuing the applicaiton
+                    time.sleep(wait_time)
                     continue
             
             # Add to cart
+            clear_screen()
             cart.add_item(pizza['name'], pizza['price'], quantity)
             print(f"\n💰 Subtotal: ${pizza['price'] * quantity:.2f}")
+            # waits for 5 seconds before continuing application
+            time.sleep(wait_time)
             clear_screen()
-            enter_key_wait()
+            # enter_key_wait()
             
         else:
             # Invalid choice
             clear_screen()
             print("\n❌ Invalid choice! Please select a number from 1-9.")
-            enter_key_wait()
+            # enter_key_wait()
+            #time to wait before continuing the applicaiton
+            time.sleep(wait_time)
 
 
 # ============================================================================

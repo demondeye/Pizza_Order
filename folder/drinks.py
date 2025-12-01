@@ -26,13 +26,13 @@ confirm_wait = wait_for_confirm
 
 # Dictionary of available drinks with their prices
 drinks = {
-    '1': {'name': 'Cola', 'price': 4.99},
-    '2': {'name': 'Fanta', 'price': 14.99},
-    '3': {'name': 'leononaid', 'price': 16.99,},
-    '4': {'name': 'Lemon Lime and bitters', 'price': 15.49,},
-    '5': {'name': 'Diet cola', 'price': 13.99,},
-    '6': {'name': 'Pepsie', 'price': 15.99,},
-    '7': {'name': 'DR pepper', 'price': 17.99,},
+    '1': {'name': 'Cola', 'price': 4.50},
+    '2': {'name': 'Fanta', 'price': 4.50},
+    '3': {'name': 'leononaid', 'price': 4.50,},
+    '4': {'name': 'Lemon Lime and bitters', 'price': 5.50,},
+    '5': {'name': 'Diet cola', 'price': 44.50,},
+    '6': {'name': 'Pepsie', 'price': 4.50,},
+    '7': {'name': 'DR pepper', 'price': 5.99,},
    
 }
 

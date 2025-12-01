@@ -14,11 +14,14 @@ Version: 1.0
 # ============================================================================
 from .Key_press import wait_for_enter, wait_for_confirm, clear_screens
 import datetime
+import time
 
 # Create the variable for enter key waiting
 enter_key_wait = wait_for_enter
 confirm_wait = wait_for_confirm
 clear_screen = clear_screens
+wait_time=3
+extra_wait_time=2
 
 
 # ============================================================================
@@ -202,7 +205,9 @@ def show_cart_menu():
                 }
                 
                 # Ask for delivery or pickup
+                clear_screen()
                 confirm = confirm_wait("Do you want Delivery for the order? (y/n): ")
+                clear_screen()
                 
                 # Get current date and time
                 now = datetime.datetime.now()
@@ -210,98 +215,142 @@ def show_cart_menu():
                 date_string = now.strftime("%d-%m-%y")
                 
                 # Get customer information
-                name = input("Enter your name for the order: ")
-                phoneNumber = input("Enter your phone number for the order: ")
-                
-                if confirm == 'y':
-                    # Delivery order
-                    address = input("Enter your address for the order: ")
+                while True:
                     
-                    # Open file for appending
-                    receit = open(f"orders_{date_string}.txt", "a")
+                    name = input("Enter your name for the order: ")
+                    if name.strip() == '':
+                        clear_screen()
+                        print("\n❌ Name cannot be empty!")
+                        #time to wait before continuing the applicaiton
+                        time.sleep(wait_time)
+                        clear_screen()
+                    elif name.isdigit():
+                        clear_screen()
+                        print("\n❌ Name cannot contain numbers!")
+                        #time to wait before continuing the applicaiton
+                        time.sleep(wait_time)
+                        clear_screen()
                     
-                    # Write to file
-                    receit.write("\n" + "=" * 60 + "\n")
-                    receit.write(f"ORDER TICKET - DELIVERY - {date_string_and_time}\n")
-                    receit.write("=" * 60 + "\n")
-                    receit.write(f"Customer: {name}\n")
-                    receit.write(f"Phone: {phoneNumber}\n")
-                    receit.write(f"Address: {address}\n")
-                    receit.write("-" * 60 + "\n")
+                    else:
+
+                        clear_screen()
+                        while True:
+                            phoneNumber = input("Enter your phone number for the order: ")
+                            if phoneNumber.isdigit():
+                                if confirm == 'y':
+                                    # Delivery order
+                                    clear_screen()
+                                    address = input("Enter your address for the order: ")
+                                    
+                                    # Open file for appending
+                                    receit = open(f"orders_{date_string}.txt", "a")
+                                    
+                                    # Write to file
+                                    receit.write("\n" + "=" * 60 + "\n")
+                                    receit.write(f"ORDER TICKET - DELIVERY - {date_string_and_time}\n")
+                                    receit.write("=" * 60 + "\n")
+                                    receit.write(f"Customer: {name}\n")
+                                    receit.write(f"Phone: {phoneNumber}\n")
+                                    receit.write(f"Address: {address}\n")
+                                    receit.write("-" * 60 + "\n")
+                                    
+                                    # Write order items
+                                    for item_name, details in order['items'].items():
+                                        receit.write(f"{item_name} x{details['quantity']} - ${details['price'] * details['quantity']:.2f}\n")
+                                    
+                                    receit.write("-" * 60 + "\n")
+                                    receit.write(f"TOTAL: ${order['total']:.2f}\n")
+                                    receit.write(f"Total Items: {order['item_count']}\n")
+                                    receit.write("=" * 60 + "\n\n")
+                                    receit.close()
+                                    
+                                    # Show confirmation
+                                    clear_screen()
+                                    print("\n" + "=" * 60)
+                                    print("✓ ORDER CONFIRMED! DELIVERY")
+                                    print("=" * 60)
+                                    print(f"\nCustomer: {name}")
+                                    print(f"Phone: {phoneNumber}")
+                                    print(f"Address: {address}")
+                                    print(f"\nTotal Items: {order['item_count']}")
+                                    print(f"Total Amount: ${order['total']:.2f}")
+                                    print(f"\nOrder Date: {date_string_and_time}")
+                                    print("\nThank you for your order!")
+                                    print("Your delicious food will be delivered soon! 🍕")
+                                    time.sleep(wait_time+extra_wait_time)
+                                    clear_cart()
+                                    return
+                                    
+                                else:
+                                    # Pickup order
+                                    receit = open(f"orders_{date_string}.txt", "a")
+                                    
+                                    # Write to file
+                                    receit.write("\n" + "=" * 60 + "\n")
+                                    receit.write(f"ORDER TICKET - PICKUP - {date_string_and_time}\n")
+                                    receit.write("=" * 60 + "\n")
+                                    receit.write(f"Customer: {name}\n")
+                                    receit.write(f"Phone: {phoneNumber}\n")
+                                    receit.write("-" * 60 + "\n")
+                                    
+                                    # Write order items
+                                    for item_name, details in order['items'].items():
+                                        receit.write(f"{item_name} x{details['quantity']} - ${details['price'] * details['quantity']:.2f}\n")
+                                    
+                                    receit.write("-" * 60 + "\n")
+                                    receit.write(f"TOTAL: ${order['total']:.2f}\n")
+                                    receit.write(f"Total Items: {order['item_count']}\n")
+                                    receit.write("=" * 60 + "\n\n")
+                                    receit.close()
+                                    
+                                    # Show confirmation
+                                    clear_screen()
+                                    print("\n" + "=" * 60)
+                                    print("✓ ORDER CONFIRMED! PICKUP")
+                                    print("=" * 60)
+                                    print(f"\nCustomer: {name}")
+                                    print(f"Phone: {phoneNumber}")
+                                    print(f"\nTotal Items: {order['item_count']}")
+                                    print(f"Total Amount: ${order['total']:.2f}")
+                                    print(f"\nOrder Date: {date_string_and_time}")
+                                    print("\nThank you for your order!")
+                                    print("Your delicious food will be ready soon! 🍕")
+                                
+                                # Clear cart after checkout
+                                
+                                #time to wait before continuing the applicaiton
+                                time.sleep(wait_time+extra_wait_time)
+                                clear_cart()
+                                #enter_key_wait()
+                                return
                     
-                    # Write order items
-                    for item_name, details in order['items'].items():
-                        receit.write(f"{item_name} x{details['quantity']} - ${details['price'] * details['quantity']:.2f}\n")
-                    
-                    receit.write("-" * 60 + "\n")
-                    receit.write(f"TOTAL: ${order['total']:.2f}\n")
-                    receit.write(f"Total Items: {order['item_count']}\n")
-                    receit.write("=" * 60 + "\n\n")
-                    receit.close()
-                    
-                    # Show confirmation
-                    print("\n" + "=" * 60)
-                    print("✓ ORDER CONFIRMED! DELIVERY")
-                    print("=" * 60)
-                    print(f"\nCustomer: {name}")
-                    print(f"Phone: {phoneNumber}")
-                    print(f"Address: {address}")
-                    print(f"\nTotal Items: {order['item_count']}")
-                    print(f"Total Amount: ${order['total']:.2f}")
-                    print(f"\nOrder Date: {date_string_and_time}")
-                    print("\nThank you for your order!")
-                    print("Your delicious food will be delivered soon! 🍕")
-                    
-                else:
-                    # Pickup order
-                    receit = open(f"orders_{date_string}.txt", "a")
-                    
-                    # Write to file
-                    receit.write("\n" + "=" * 60 + "\n")
-                    receit.write(f"ORDER TICKET - PICKUP - {date_string_and_time}\n")
-                    receit.write("=" * 60 + "\n")
-                    receit.write(f"Customer: {name}\n")
-                    receit.write(f"Phone: {phoneNumber}\n")
-                    receit.write("-" * 60 + "\n")
-                    
-                    # Write order items
-                    for item_name, details in order['items'].items():
-                        receit.write(f"{item_name} x{details['quantity']} - ${details['price'] * details['quantity']:.2f}\n")
-                    
-                    receit.write("-" * 60 + "\n")
-                    receit.write(f"TOTAL: ${order['total']:.2f}\n")
-                    receit.write(f"Total Items: {order['item_count']}\n")
-                    receit.write("=" * 60 + "\n\n")
-                    receit.close()
-                    
-                    # Show confirmation
-                    print("\n" + "=" * 60)
-                    print("✓ ORDER CONFIRMED! PICKUP")
-                    print("=" * 60)
-                    print(f"\nCustomer: {name}")
-                    print(f"Phone: {phoneNumber}")
-                    print(f"\nTotal Items: {order['item_count']}")
-                    print(f"Total Amount: ${order['total']:.2f}")
-                    print(f"\nOrder Date: {date_string_and_time}")
-                    print("\nThank you for your order!")
-                    print("Your delicious food will be ready soon! 🍕")
-                
-                # Clear cart after checkout
-                clear_cart()
-                enter_key_wait()
-                return
+                            else:
+                                clear_screen()
+                                print("\n❌ Invalid phone number! Please enter digits only.")
+                                #time to wait before continuing the applicaiton
+                                time.sleep(wait_time)
+                                clear_screen()
+                                # clear_cart()
+                                #enter_key_wait()
+                       
                     
             elif choice == '2':
                 # Clear cart with confirmation
+                clear_screen()
                 confirm = confirm_wait("Are you sure you want to clear the cart? (y/n): ")       
                 if confirm == 'y':
                     clear_cart()
                     clear_screen()
                     print("Cart has been cleared.")
-                    enter_key_wait()
+                    # waits for 3 seconds before continuing application
+                    time.sleep(3)
+                    # enter_key_wait()
                 else:
+                    clear_screen()
                     print("Cart not cleared.")
-                    enter_key_wait()
+                    # waits for 3 seconds before continuing application
+                    time.sleep(wait_time)
+                    # enter_key_wait()
                     
             elif choice == '3':
                 # Return to main menu
@@ -309,8 +358,10 @@ def show_cart_menu():
                     
             else:
                 clear_screen()
-                print("\n❌ Invalid choice!")
-                enter_key_wait()
+                print("\n❌ Invalid choice! please select 1-3")
+                 #time to wait before continuing the applicaiton
+                time.sleep(wait_time)
+                #enter_key_wait()
 
 
 def cart_empty_menu():
@@ -331,5 +382,7 @@ def cart_empty_menu():
             return
         else:
             clear_screen()
-            print("\n❌ Invalid choice!")
-            enter_key_wait()
+            print("\n❌ Invalid choice! please select 1")
+            # enter_key_wait()
+            #time to wait before continuing the applicaiton
+            time.sleep(wait_time)
